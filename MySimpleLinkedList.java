@@ -138,12 +138,24 @@ public class MySimpleLinkedList<T extends Comparable<T>> implements Iterable<T>{
         SimpleIterator<T> it2=new SimpleIterator<>(l.first);
 
         MySimpleLinkedList<T> lista=new MySimpleLinkedList<T>();  //En esta lista se colocan los valores no comunes de ambas listas
-        boolean estaEnl=false;  //Verifica si un elemento de la lista 1 esta en la lista 2
+        boolean estaEnl;  //Verifica si un elemento de la lista 1 esta en la lista 2
 
         while(it1.hasNext()){
-            while(it2.hasNext()){
-                if(it1==it2)
+            estaEnl=false;
+
+            while(it2.hasNext() && !estaEnl){   //Itero el it2 hasta que coincida con it1 o llegue al final de la lista
+                if(it1==it2){
+                    estaEnl=true;
+                }
+                it2.next();
             }
+            //Tras salir del while, puede pasar que se encontro a it1 en la otra lista (estaEnl=true) o que no se haya encontrado
+            if(!estaEnl){
+                lista.insertFront(it1.getInfo());   //Si no se encontro it1 en la otra lista, se lo agrega a la lista nueva
+            }
+            it1.next();
+            it2.setCursor(l.first); //Vuelvo a poner a it2 al principio
         }
+        return lista;
     }
 }

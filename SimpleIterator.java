@@ -26,4 +26,8 @@ public class SimpleIterator<T extends Comparable<T>> implements Iterator<T> {
     public Node<T> getCursor(){
         return cursor;
     }
+
+    public void setCursor(Node<T>newCursor){
+        this.cursor=newCursor;
+    }
 }
