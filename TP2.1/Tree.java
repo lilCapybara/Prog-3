@@ -46,15 +46,33 @@ public class Tree {
 		delete(value, root);    //Inicio el delete desde la raiz del arbol
 	}
 
-	public void delete (int value, TreeNode newNode){
+	private boolean delete (int value, TreeNode newNode){
 
+	}
+
+	public int getHeight(){
+		return getHeight(root);
+	}
+
+	private int getHeight(TreeNode currentNode){
+		if(currentNode==null){
+			return 0;
+		}
+
+		int leftHight=getHeight(currentNode.getLeft())+1;
+		int rightHight=getHeight(currentNode.getRight())+1;
+
+		if (leftHight>rightHight){
+			return leftHight;
+		}
+		return rightHight;
 	}
 
 	public void insert(int value){ //Este es el insert que utiliza el usuario en el main
 		insert(value, root);    //Inicio el insert desde la raiz del arbol
 	}
 
-	public void insert(int value, TreeNode newNode){
+	private void insert(int value, TreeNode newNode){
 
 		if (newNode.isEmpty()){        //Si el nodo esta vacio, se puede insertar el valor
 			newNode.setValue(value);
@@ -86,7 +104,7 @@ public class Tree {
 		}
 	}
 
-	public void printPreOrder(TreeNode currentNode){    //Metodo que imprime el preorden
+	private void printPreOrder(TreeNode currentNode){    //Metodo que imprime el preorden
 		if (currentNode!=null){
 			System.out.println(currentNode.getValue());    //Imprimo el valor del nodo antes de recorrer los subarboles de este
 			printPreOrder(currentNode.getLeft());    //Continuo por el nodo izquierdo
@@ -102,7 +120,7 @@ public class Tree {
 		}
 	}
 
-	public void printPostOrder(TreeNode currentNode){    //Metodo que imprime el postorden
+	private void printPostOrder(TreeNode currentNode){    //Metodo que imprime el postorden
 		if (currentNode!=null){
 
 			printPostOrder(currentNode.getLeft());    //Continuo por el nodo izquierdo
@@ -119,7 +137,7 @@ public class Tree {
 		}
 	}
 
-	public void printInOrder(TreeNode currentNode){    //Metodo que imprime el postorden
+	private void printInOrder(TreeNode currentNode){    //Metodo que imprime el postorden
 		if (currentNode!=null){
 
 			printInOrder(currentNode.getLeft());    //Continuo por el nodo izquierdo
@@ -129,11 +147,54 @@ public class Tree {
 		}
 	}
 
+	public List getLongestBranch(){
+		ArrayList<Integer>longestBranch=new ArrayList<Integer>();
+		ArrayList<Integer>currentBranch=new ArrayList<Integer>();
+		return getLongestBranch(root,longestBranch,currentBranch);
+	}
+
+	private List getLongestBranch(TreeNode currentNode,ArrayList<Integer>longestBranch,ArrayList<Integer>currentBranch){
+
+	}
+	public List getFrontera(){	//Funcion usada por el usuario en el main
+		ArrayList<Integer>frontera=new ArrayList<Integer>();
+		return this.getFrontera(root,frontera);
+	}
+
+	private List getFrontera(TreeNode currentNode, ArrayList<Integer>frontera){	//Funcion que devuelve la frontera
+		if(currentNode==null){	//Controla que no sea un arbol vacio
+			return frontera;
+		}
+
+		if(currentNode.getLeft()==null && currentNode.getRight()==null){ //Si el nodo es una hoja
+			frontera.add(currentNode.getValue());
+		}
+
+		getFrontera(currentNode.getLeft(),frontera);	//Entro en el nodo izquierdo
+		getFrontera(currentNode.getRight(),frontera);	//Entro en el nodo derecho
+
+		return frontera;
+	}
+
+	public int getMaxElem(){
+		return getMaxElem(root);
+	}
+
+	private int getMaxElem(TreeNode currentNode){
+		if(currentNode==null){
+			return Integer.MIN_VALUE;	//No hay valor que retornar, asi que retorno el int mas pequeño posible
+		}
+
+		if(currentNode.getRight()==null){	//Si no tiene hijo derecho, es el valor mayor
+			return currentNode.getValue();
+		}
+		return getMaxElem(currentNode.getRight());	//Si currentNode tiene un hijo derecho, este tendra un valor mayor
+	}
 	public int sumarNodosInternos(){    //Metodo utilizado por el usuario en el main
 		return sumarNodosInternos(root);
 	}
 
-	public int sumarNodosInternos(TreeNode currentNode){    //Metodo que realiza la suma de nodos internos
+	private int sumarNodosInternos(TreeNode currentNode){    //Metodo que realiza la suma de nodos internos
 		if(currentNode==null){
 			return 0;
 		}else if(currentNode.getLeft()==null && currentNode.getRight()==null){    //Si el nodo es una hoja, devuelve 0
@@ -148,7 +209,7 @@ public class Tree {
 		return valorMayorAK(root,k,mayoresAK);
 	}
 
-	public List valorMayorAK(TreeNode currentNode, int k, List mayoresAK){    //Metodo que arma la lista con valores mayores a k
+	private List valorMayorAK(TreeNode currentNode, int k, List mayoresAK){    //Metodo que arma la lista con valores mayores a k
 
 		if(currentNode==null){    //Condicion de corte para la recursion
 			return mayoresAK;
@@ -157,7 +218,6 @@ public class Tree {
 		if(k<currentNode.getValue()){
 			mayoresAK.add(currentNode.getValue());    //Agrego el valor del nodo a la lista
 		}
-
 
 		valorMayorAK(currentNode.getLeft(),k,mayoresAK);    //Sigo por la rama izquierda
 		valorMayorAK(currentNode.getRight(),k,mayoresAK);    //Sigo por la rama derecha
@@ -169,7 +229,7 @@ public class Tree {
 		fillTree(root);
 	}
 
-	public int fillTree(TreeNode currentNode){
+	private int fillTree(TreeNode currentNode){
 
 		if(currentNode.isEmpty()){	//Si el nodo esta vacio, significa que es un nodo interno y debo llenarlo
 
