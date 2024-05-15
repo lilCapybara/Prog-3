@@ -1,7 +1,7 @@
 import java.util.Hashtable;
 import java.util.Iterator;
 
-public class DFS {
+public class DFS<T> {
     private Hashtable<Integer,String> colorVertices;   //<key,value>
 
     public DFS(){
@@ -25,7 +25,7 @@ public class DFS {
 
     private void dfsVisit(Grafo<T>grafo, Integer vertice){
         System.out.println(" "+vertice);
-        colorVertices.put(vertice,"amarillo");    //Marco el vertice como visitado
+        colorVertices.put(vertice,"amarillo");    //Marco el vertice como visitado (amarillo)
 
         Iterator<Integer>adyacentesAVertice=grafo.obtenerAdyacentes(vertice);   //Traigo los adyacentes del vertice
         while(adyacentesAVertice.hasNext()){

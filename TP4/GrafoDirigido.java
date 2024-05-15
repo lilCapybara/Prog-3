@@ -7,6 +7,9 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	private Hashtable<Integer, LinkedList<Arco<T>>> vertices;	//Recomendable almacenar solo los arcos que salen de un vertice
 																//<Key(vertice_id),Lista de arcos asociados al vertice>
 
+	public GrafoDirigido(){
+		this.vertices=new Hashtable<>();
+	}
 	@Override
 	public void agregarVertice(int verticeId) {
 		if(vertices.containsKey(verticeId)){	//Verifico que la id del vertice no exista
