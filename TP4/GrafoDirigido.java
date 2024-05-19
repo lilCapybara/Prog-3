@@ -7,9 +7,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	private Hashtable<Integer, LinkedList<Arco<T>>> vertices;	//Recomendable almacenar solo los arcos que salen de un vertice
 																//<Key(vertice_id),Lista de arcos asociados al vertice>
 
+
 	public GrafoDirigido(){
 		this.vertices=new Hashtable<>();
 	}
+
+
 	@Override
 	public void agregarVertice(int verticeId) {
 		if(vertices.containsKey(verticeId)){	//Verifico que la id del vertice no exista
@@ -30,12 +33,20 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
-		// TODO Auto-generated method stub
+		if(vertices.containsKey(verticeId1)&&vertices.containsKey(verticeId2)){
+			LinkedList<Arco<T>>listaDeArcos=vertices.get(verticeId1); //Me da la lista de arcos salientes de ese vertice
+			//Podria ser tambien .add(new Arco(verticeId1,verticeId2, etiqueta) y me ahorro la linea que sigue
+			listaDeArcos.add(verticeId1,verticeId2,etiqueta);	//Agrego el arco  la lista de arcos
+			vertices.put(verticeId1,listaDeArcos);	//Actualizo el vertice
+		}
+		return;
 	}
 
 	@Override
 	public void borrarArco(int verticeId1, int verticeId2) {
-		// TODO Auto-generated method stub
+		if(vertices.containsKey(verticeId1)){
+
+		}
 	}
 
 	@Override
