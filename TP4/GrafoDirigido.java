@@ -36,7 +36,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		if(vertices.containsKey(verticeId1)&&vertices.containsKey(verticeId2)){
 			LinkedList<Arco<T>>listaDeArcos=vertices.get(verticeId1); //Me da la lista de arcos salientes de ese vertice
 			//Podria ser tambien .add(new Arco(verticeId1,verticeId2, etiqueta) y me ahorro la linea que sigue
-			listaDeArcos.add(verticeId1,verticeId2,etiqueta);	//Agrego el arco  la lista de arcos
+			listaDeArcos.add(new Arco<>(verticeId1,verticeId2,etiqueta));	//Agrego el arco  la lista de arcos
 			vertices.put(verticeId1,listaDeArcos);	//Actualizo el vertice
 		}
 		return;
@@ -44,8 +44,14 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public void borrarArco(int verticeId1, int verticeId2) {
-		if(vertices.containsKey(verticeId1)){
-
+		if(vertices.containsKey(verticeId1)&&vertices.containsKey(verticeId2)){
+			LinkedList<Arco<T>>listaDeArcos=vertices.get(verticeId1); //Me da la lista de arcos salientes de ese vertice
+			for(Arco arco:listaDeArcos) {	//Recorro la lista de verices buscando al vertice que deseo borrar
+				if(arco.getVerticeOrigen()==verticeId1 && arco.getVerticeDestino()==verticeId2) {
+					listaDeArcos.remove(arco);	//Si encuentro el vertice en la lista, lo borro
+				}
+			}
+			vertices.put(verticeId1,listaDeArcos); //Actualizo el vertice
 		}
 	}
 
